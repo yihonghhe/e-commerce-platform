@@ -1,0 +1,13 @@
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+  }
+  
+  .scrollable-list {
+    max-height: 300px;
+    overflow-y: auto;
+  }
