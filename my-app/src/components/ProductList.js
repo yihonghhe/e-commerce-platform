@@ -2,17 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { fetchProducts } from '../services/Product'; // Ensure this path is correct
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
+import './ProductList.css';
 const userName = localStorage.getItem('userName');
-const addToCart = (product) => {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  let found = cart.find(item => item.id === product.id);
-  if (found) {
-    found.quantity += 1; // If the product is already in the cart, increase its quantity
-  } else {
-    cart.push({...product, quantity: 1}); // Otherwise, add the product with quantity 1
-  }
-  localStorage.setItem('cart', JSON.stringify(cart)); // Update the cart in localStorage
-};
+
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -53,24 +46,7 @@ const ProductList = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">Innocaption E-Commerce</Link>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" to="/user">Hello, {userName}</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  <i className="fa fa-shopping-cart"></i> Cart
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        </nav>
+      <Navbar />
         <nav className="navbar navbar-expand-lg navbar-light bg-blue">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {categories.map(category => (
@@ -95,17 +71,26 @@ const ProductList = () => {
         <div className="row">
           {filteredProducts.map(product => (
             <div key={product.id} className="col-sm-12 col-md-6 col-lg-4 mb-4">
-              <div className="card h-100">
-                <img src={product.thumbnail} className="card-img-top" alt={product.title} />
+              <Link to={`/product/${product.id}`}>
+                <div className="card h-100">
+                  <div className="image-container">
+                    <img src={product.thumbnail} alt={product.title} className="card-img-top img-fluid" />
+                  </div>
+                
                 <div className="card-body">
                   <h5 className="card-title">{product.title}</h5>
                   <p className="card-text">{product.description}</p>
                   <div className="d-flex justify-content-between align-items-center">
-                    <span className="text-muted">${product.price}</span>
-                    <button className="btn btn-primary" onClick={() => addToCart(product)}>Add to Cart</button>
+                    <div className="discount-info">
+                  {product.discountPercentage}% Off
+                </div>
+                <span className="limited-sale">Limited Time Sale</span>
+                   
                   </div>
                 </div>
+                
               </div>
+              </Link>
             </div>
           ))}
         </div>

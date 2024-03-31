@@ -6,7 +6,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import UserInfo from './components/UserInfo';
 import Cart from './components/Cart';
-function App() {
+import ProductDetail from './components/ProductDetail';
+
+const App = () => {
   return (
     <Router>
       <div className="App">
@@ -15,6 +17,7 @@ function App() {
           <Route path="/products" element={<ProductList />} />
           <Route path="/user" element={<UserInfo />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/product/:productId" element={<ProductDetail />} />
         </Routes>
       </div>
     </Router>

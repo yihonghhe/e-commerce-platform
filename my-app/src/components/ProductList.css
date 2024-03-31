@@ -1,0 +1,23 @@
+.discount-info {
+    background-color: rgb(203, 6, 6);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+  }
+a, a:link, a:visited, a:hover, a:focus, a:active {
+text-decoration: none !important; /* Force override */
+color: inherit !important; /* Or specify a color, and force override */
+}
+
+.limited-sale {
+    color: rgb(203, 6, 6);
+    font-weight: bold;
+}
+
+.image-container {
+    height:400px;
+    overflow: hidden; /* Hide parts of the image that exceed the container's height */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
