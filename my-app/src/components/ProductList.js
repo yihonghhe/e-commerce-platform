@@ -1,6 +1,5 @@
-// src/ProductList.js
 import React, { useState, useEffect } from 'react';
-import { fetchProducts } from '../services/Product'; // Ensure this path is correct
+import { fetchProducts } from '../services/Product';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import './ProductList.css';
@@ -12,21 +11,19 @@ const ProductList = () => {
 
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [userName, setUserName] = useState(localStorage.getItem('userName')); // State to hold the username
+  const [userName, setUserName] = useState(localStorage.getItem('userName')); 
 
   useEffect(() => {
     fetchProducts().then(data => {
       setProducts(data);
-      // Extract categories from products
       const uniqueCategories = Array.from(new Set(data.map(product => product.category)));
       setCategories(['All', ...uniqueCategories]);
     });
   }, []);
 
   useEffect(() => {
-    // This effect runs when the component mounts and listens for 'userNameUpdated' events
     const handleUserNameUpdate = () => {
-      setUserName(localStorage.getItem('userName')); // Update userName state when the event is received
+      setUserName(localStorage.getItem('userName')); 
     };
 
     window.addEventListener('userNameUpdated', handleUserNameUpdate);
@@ -36,7 +33,7 @@ const ProductList = () => {
     };
   }, []);
 
-  // const filteredProducts = selectedCategory === 'All' ? products : products.filter(product => product.category === selectedCategory);
+
 
   const filteredProducts = products.filter(product => {
     return (selectedCategory === 'All' || product.category === selectedCategory) &&

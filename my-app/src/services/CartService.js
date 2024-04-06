@@ -1,9 +1,6 @@
-// src/services/CartService.js
 
-// Function to get the auth token
 const getAuthToken = () => localStorage.getItem('userToken');
 
-// Fetch cart by user ID
 export const fetchCartByUserId = async (userId) => {
   const token = getAuthToken();
   if (!token) {
@@ -21,7 +18,7 @@ export const fetchCartByUserId = async (userId) => {
       throw new Error('Failed to fetch cart');
     }
     const data = await response.json();
-    return data.carts; // Assuming the API returns an object with a carts array
+    return data.carts; 
   } catch (error) {
     console.error('Error fetching cart:', error);
     return null;

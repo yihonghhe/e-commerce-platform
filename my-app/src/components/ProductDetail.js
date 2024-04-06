@@ -41,29 +41,27 @@ const ProductDetail = () => {
 
   const addToCart = async (productToAdd) => {
     
-    const token = localStorage.getItem('userToken'); // Assuming you store the token here
+    const token = localStorage.getItem('userToken'); 
     const cartKey = `cart_${currentUser.id}`;
     let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     let found = cart.find(item => item.id === productToAdd.id);
     
     if (found) {
-      found.quantity += 1; // If the product is already in the cart, increase its quantity
+      found.quantity += 1; 
     } else {
-      cart.push({...productToAdd, quantity: 1}); // Otherwise, add the product with quantity 1
+      cart.push({...productToAdd, quantity: 1}); 
     }
   
-    // Update the cart in local storage
     localStorage.setItem(cartKey, JSON.stringify(cart));
     const userId = currentUser.id
-    // Additionally, update the cart on the server
     try {
       const response = await fetch(`https://dummyjson.com/carts/user/${userId}`, {
-        method: 'PUT', // The method might be different based on the API
+        method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Include the token if required
+          'Authorization': `Bearer ${token}`, 
         },
-        body: JSON.stringify({ userId, products: cart }), // Adjust based on the API's expected format
+        body: JSON.stringify({ userId, products: cart }),
       });
   
       if (!response.ok) throw new Error('Failed to update cart on server');
@@ -71,21 +69,20 @@ const ProductDetail = () => {
       const updatedCart = await response.json();
       console.log('Cart updated on server:', updatedCart);
   
-      // Optionally, refresh local cart data with server response if needed
-      // localStorage.setItem('cart', JSON.stringify(updatedCart.products || []));
+      
   
     } catch (error) {
       console.error('Error updating cart:', error);
     }
   
-    navigate('/cart'); // Navigate to the cart page after updating
+    navigate('/cart'); 
   };
   const nextImage = () => {
-    setCurrentImageIndex(prevIndex => (prevIndex + 1) % product.images.length); // Loop back to the first image
+    setCurrentImageIndex(prevIndex => (prevIndex + 1) % product.images.length); 
   };
 
   const prevImage = () => {
-    setCurrentImageIndex(prevIndex => (prevIndex - 1 + product.images.length) % product.images.length); // Loop back to the last image
+    setCurrentImageIndex(prevIndex => (prevIndex - 1 + product.images.length) % product.images.length); 
   };
   useEffect(() => {
     
@@ -93,7 +90,7 @@ const ProductDetail = () => {
       
       const userData = await fetchCurrentUser();
       if (userData) {
-        setCurrentUser(userData); // Assuming the response contains user data directly
+        setCurrentUser(userData); 
       }
     };
 
@@ -102,7 +99,7 @@ const ProductDetail = () => {
     fetchProductById(productId).then(productData => {
       setProduct(productData);
       window.scrollTo(0, 0);
-      // Once the product is fetched, fetch related products from the same category
+      
       fetchProducts().then(allProducts => {
         const related = allProducts.filter(p => p.category === productData.category && p.id !== productData.id);
         setRelatedProducts(related);

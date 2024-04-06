@@ -1,4 +1,3 @@
-// src/Cart.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
@@ -19,7 +18,7 @@ const fetchCurrentUser = async () => {
     const response = await fetch('https://dummyjson.com/auth/me', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`, // Adjust according to how the API expects the token
+        'Authorization': `Bearer ${token}`, 
       },
     });
     const data = await response.json();
@@ -41,19 +40,16 @@ const Cart = () => {
         const cartKey = `cart_${userData.id}`;
             
         const apiCartItems = await fetchCartByUserId(userData.id).then(apiCart => apiCart[0]?.products || []);
-        // Assume localCart stores items by id for simplicity
         const localCart = JSON.parse(localStorage.getItem(cartKey)) || [];
   
-        // Merge logic: If an item exists in both apiCartItems and localCart, increment its quantity based on localCart
+        
         const mergedCart = apiCartItems.map(apiItem => {
           if (localCart[apiItem.id]) {
-            // Combine quantities from API and local additions
             return { ...apiItem, quantity: apiItem.quantity + localCart[apiItem.id].quantity };
           }
           return apiItem;
         });
   
-        // Add new local items not present in API cart
         Object.values(localCart).forEach(localItem => {
           if (!mergedCart.find(item => item.id === localItem.id)) {
             mergedCart.push(localItem);
@@ -162,7 +158,6 @@ const Cart = () => {
                       <h3 className="fw-bold mb-5 mt-2 pt-1">Summary</h3>
                       <hr className="my-4" />
 
-                      {/* Items Count and Total Price */}
                       <div className="d-flex justify-content-between mb-4">
                         <h5 className="text-uppercase">items {cartItems.length}</h5>
                         <h5>$ {getTotalPrice().toFixed(2)}</h5>
@@ -172,7 +167,6 @@ const Cart = () => {
                       <div className="mb-4 pb-2">
                         <select className="select">
                           <option value="1">Standard-Delivery- $5.00</option>
-                          {/* Additional shipping options here */}
                         </select>
                       </div>
 
@@ -186,10 +180,9 @@ const Cart = () => {
 
                       <hr className="my-4" />
 
-                      {/* Total Price Including Shipping */}
                       <div className="d-flex justify-content-between mb-5">
                         <h5 className="text-uppercase">Total price</h5>
-                        {/* Assuming standard delivery is the only option and always selected */}
+                        
                         <h5>$ {(getTotalPrice() + 5).toFixed(2)}</h5>
                       </div>
 

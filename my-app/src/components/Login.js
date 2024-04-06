@@ -1,6 +1,5 @@
-// src/Login.js
 import React, { useState, useEffect } from 'react';
-import { fetchUsers } from '../services/User'; // Adjust the path as needed
+import { fetchUsers } from '../services/User'; 
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 const getAuthToken = () => localStorage.getItem('userToken');
@@ -16,7 +15,7 @@ const fetchCurrentUser = async () => {
     const response = await fetch('https://dummyjson.com/auth/me', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`, // Adjust according to how the API expects the token
+        'Authorization': `Bearer ${token}`, 
       },
     });
     const data = await response.json();
@@ -45,9 +44,9 @@ const Login = () => {
         });
         const data = await response.json();
         if (data.token) {
-          localStorage.setItem('userToken', data.token); // Save the auth token
-          localStorage.setItem('userName', username); // Save the username for UI purposes
-          navigate('/products'); // Navigate to the products page or dashboard
+          localStorage.setItem('userToken', data.token); 
+          localStorage.setItem('userName', username); 
+          navigate('/products'); 
         } else {
           // Handle failed login
           alert('Login failed. Please try again.');
@@ -59,7 +58,7 @@ const Login = () => {
     };
   
     const handleLogin = (user) => {
-      authenticateUser(user.username, user.password); // Use user's username and password
+      authenticateUser(user.username, user.password); 
     };
   
     return (

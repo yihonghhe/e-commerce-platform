@@ -15,7 +15,7 @@ const fetchCurrentUser = async () => {
       const response = await fetch('https://dummyjson.com/auth/me', {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`, // Adjust according to how the API expects the token
+          'Authorization': `Bearer ${token}`, 
         },
       });
       const data = await response.json();
@@ -31,7 +31,7 @@ const UserInfo = () => {
     const initUser = async () => {
       const userData = await fetchCurrentUser();
       if (userData) {
-        setCurrentUser(userData); // Set user data first
+        setCurrentUser(userData); 
   
       }
     };
@@ -66,22 +66,20 @@ const UserInfo = () => {
                     <img src={currentUser.image || "https://bootdey.com/img/Content/avatar/avatar7.png"} alt="Admin" className="rounded-circle" width="150" />
                     <div className="mt-3">
                       <h4>{currentUser.firstName} {currentUser.lastName}</h4>
-                      {/* Assuming role and location aren't directly available, use placeholders or add them to your user model if possible */}
+                      
                       <p className="text-secondary mb-1">{currentUser.email}</p>
                       <p className="text-muted font-size-sm">{currentUser.address.address},{currentUser.address.city},{currentUser.address.state}</p>
-                      {/* Buttons can be functional or decorative based on your application's needs */}
+                      
                       <button className="btn btn-primary">Follow</button>
                       <button className="btn btn-outline-primary">Message</button>
                     </div>
                   </div>
                 </div>
               </div>
-              {/* Social Links or additional information can be added here */}
             </div>
             <div className="col-md-8">
               <div className="card mb-3">
                 <div className="card-body">
-                  {/* User details here */}
                   <div className="row">
                     <div className="col-sm-3">
                       <h6 className="mb-0">Full Name</h6>
